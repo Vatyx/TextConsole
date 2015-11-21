@@ -15,14 +15,11 @@ app.get("/", function(req, res)
 
 app.post("/message", function(req, res)
 {
-	console.log("Hey I'm in this endpoint");
-	//console.log(req.params);
 	console.log(req.body);
-	//console.log(req.query);
-	//console.log(req.)
-	//var obj = JSON.parse(JSON.stringify(req.body, null, 2));
-	//console.log(obj);
-	//console.log(req);
+
+	var message = req.body.body;
+	var number = req.body.From;
+	console.log(message + " " + number);
 });
 
 app.set('port', (process.env.PORT || 5000));
