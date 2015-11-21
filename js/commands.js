@@ -1,6 +1,14 @@
 var needle = require("needle");
+var twilio = require("./twilio.js");
 
-function define(word,callback){
+exports.daytime = function(number)
+{
+    var date = new Date();
+    var current_hour = date.toString();
+    twilio.sendMessage(number, current_hour);
+}
+
+exports.define = function(number, word){
     needle.get("https://api.pearson.com:443/v2/dictionaries/ldoce5/entries?headword=" + word, null,
               function(error,response,body){
                     var results = "";
@@ -11,7 +19,7 @@ function define(word,callback){
                     }
                     if (results === "")
                         results = "Word(s) not defined.";
-                    callback(results);
+                    twilio.sendMessage(number, results);
                });
     
 }

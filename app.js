@@ -1,12 +1,14 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 var twilio = require('./js/twilio.js');
+var commands = require('./js/commands.js');
 
 var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-//xtwilio.sendMessage("+12144035793", "Hey there buddy boy");
+
+var defaultnumber = "+12144035793";
 
 app.get("/", function(req, res)
 {
@@ -15,15 +17,21 @@ app.get("/", function(req, res)
 
 app.post("/message", function(req, res)
 {
-	console.log(req.body);
-
-	var message = req.body.Body;
 	var number = req.body.From;
+	var command = req.body.Body.substring(0, str.indexOf(“ “)).toLowerCase();
+	var content = req.body.Body.substring(str.indexOf(“ “)).trim().spilt(“.”);
 
-	var date = new Date();
-	var current_hour = date.getHours();
-
-	twilio.sendMessage(number, current_hour);
+	switch(command)
+	{
+		case "time":
+			commands.daytime(number);
+			break;
+		case "define":
+			commands.define(number, content[0]);
+			break;
+		default:
+			break;
+	}
 });
 
 app.set('port', (process.env.PORT || 5000));
