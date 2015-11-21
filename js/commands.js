@@ -3,6 +3,7 @@ var twilio = require("./twilio.js");
 
 exports.daytime = function(number)
 {
+    console.log("Got into the daytime function");
     var date = new Date();
     var current_hour = date.toString();
     twilio.sendMessage(number, current_hour);

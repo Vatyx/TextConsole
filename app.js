@@ -22,6 +22,7 @@ app.post("/message", function(req, res)
 	var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
 	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(".");
 
+	console.log(req.body.Body);
 	console.log("From: " + number);
 	console.log("Command: " + command);
 	console.log("Content: " + content);
@@ -37,6 +38,7 @@ app.post("/message", function(req, res)
 			commands.define(number, content[0]);
 			break;
 		default:
+			console.log("In default")
 			break;
 	}
 });
