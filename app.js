@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 db = {};
 
-var defaultnumber = "+12144035793";
-commands.location(defaultnumber, "Muleshoe, TX");
+//var defaultnumber = "+12144035793";
+//commands.location(defaultnumber, "Muleshoe, TX");
 
 app.get("/", function(req, res)
 {
