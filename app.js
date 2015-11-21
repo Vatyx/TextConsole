@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 
 var twilio = require('./js/twilio.js');
-twilio.sendMessage("+12144035793", "Hey there buddy boy");
+//xtwilio.sendMessage("+12144035793", "Hey there buddy boy");
 
 app.get("/", function(req, res)
 {
@@ -12,7 +12,10 @@ app.get("/", function(req, res)
 app.post("/message", function(req, res)
 {
 	console.log("Hey I'm in this endpoint");
-	console.log(req);
+	console.log(req.params);
+	var obj = JSON.parse(JSON.stringify(req.body, null, 2));
+	console.log(obj);
+	//console.log(req);
 });
 
 app.set('port', (process.env.PORT || 5000));
