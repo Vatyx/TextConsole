@@ -1,7 +1,11 @@
 var express = require("express");
+var bodyParser = require('body-parser');
+var twilio = require('./js/twilio.js');
+
 var app = express();
 
-var twilio = require('./js/twilio.js');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 //xtwilio.sendMessage("+12144035793", "Hey there buddy boy");
 
 app.get("/", function(req, res)
@@ -12,9 +16,12 @@ app.get("/", function(req, res)
 app.post("/message", function(req, res)
 {
 	console.log("Hey I'm in this endpoint");
-	console.log(req.params);
-	var obj = JSON.parse(JSON.stringify(req.body, null, 2));
-	console.log(obj);
+	//console.log(req.params);
+	console.log(req.body);
+	//console.log(req.query);
+	//console.log(req.)
+	//var obj = JSON.parse(JSON.stringify(req.body, null, 2));
+	//console.log(obj);
 	//console.log(req);
 });
 
