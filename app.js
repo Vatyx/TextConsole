@@ -17,10 +17,10 @@ app.get("/", function(req, res)
 
 app.post("/message", function(req, res)
 {
-	console.log("In message")
+	console.log("In message");
 	var number = req.body.From;
-	var command = req.body.Body.substring(0, str.indexOf(“ “)).toLowerCase();
-	var content = req.body.Body.substring(str.indexOf(“ “)).trim().spilt(“.”);
+	var command = req.body.Body.substring(0, str.indexOf(" ")).toLowerCase();
+	var content = req.body.Body.substring(str.indexOf(" ")).trim().spilt(".");
 
 	console.log("From: " + number);
 	console.log("Command: " + command);
