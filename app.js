@@ -17,16 +17,23 @@ app.get("/", function(req, res)
 
 app.post("/message", function(req, res)
 {
+	console.log("In message")
 	var number = req.body.From;
 	var command = req.body.Body.substring(0, str.indexOf(“ “)).toLowerCase();
 	var content = req.body.Body.substring(str.indexOf(“ “)).trim().spilt(“.”);
 
+	console.log("From: " + number);
+	console.log("Command: " + command);
+	console.log("Content: " + content);
+
 	switch(command)
 	{
 		case "time":
+			console.log("In time");
 			commands.daytime(number);
 			break;
 		case "define":
+			console.log("In define");
 			commands.define(number, content[0]);
 			break;
 		default:
