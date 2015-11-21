@@ -20,7 +20,7 @@ app.post("/message", function(req, res)
 	console.log("In message");
 	var number = req.body.From;
 	var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
-	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().spilt(".");
+	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(".");
 
 	console.log("From: " + number);
 	console.log("Command: " + command);
