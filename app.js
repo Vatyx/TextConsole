@@ -17,9 +17,13 @@ app.post("/message", function(req, res)
 {
 	console.log(req.body);
 
-	var message = req.body.body;
+	var message = req.body.Body;
 	var number = req.body.From;
-	console.log(message + " " + number);
+
+	var date = new Date();
+	var current_hour = date.getHours();
+
+	twilio.sendMessage(number, current_hour);
 });
 
 app.set('port', (process.env.PORT || 5000));
