@@ -12,7 +12,7 @@ app.get("/", function(req, res)
 app.post("/message", function(req, res)
 {
 	console.log("Hey I'm in this endpoint");
-	console.log(req.query);
+	console.log(req.body);
 });
 
 app.set('port', (process.env.PORT || 5000));
