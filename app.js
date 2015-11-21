@@ -19,10 +19,8 @@ app.post("/message", function(req, res)
 {
 	console.log("In message");
 	var number = req.body.From;
-
-	if(req.body.Body.fin)
 	//var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
-	var command = req.body.Body.split(" ")[0];
+	var command = (req.body.Body.split(" "))[0];
 	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(".");
 
 	console.log(req.body.Body);
