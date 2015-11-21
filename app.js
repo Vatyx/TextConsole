@@ -1,9 +1,17 @@
 var express = require("express");
 var app = express();
 
+var twilio = require('./js/twilio.js');
+twilio.sendMessage("+12144035793", "Hey there buddy boy");
+
 app.get("/", function(req, res)
 {
 	res.send("Hello world!");
+});
+
+app.post("/message", function(req, res)
+{
+	console.log(req.query);
 });
 
 app.set('port', (process.env.PORT || 5000));
