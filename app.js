@@ -11,6 +11,7 @@ app.get("/", function(req, res)
 
 app.post("/message", function(req, res)
 {
+	console.log("Hey I'm in this endpoint");
 	console.log(req.query);
 });
 
