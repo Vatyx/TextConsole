@@ -1,5 +1,6 @@
 var needle = require("needle");
 var twilio = require("./twilio.js");
+var setLocation = require("./../app.js");
 
 exports.daytime = function(number)
 {
@@ -31,4 +32,15 @@ exports.define = function(number, word){
                     twilio.sendMessage(number, results);
                });
     
+}
+
+exports.location = function(number, name)
+{
+    needle.get("http://nominatim.openstreetmap.org/search?q=" + name + "&format=json", null,
+              function(error,response,body){
+                    var payload = { lat: body[0].lat, lon:body[0].lon}
+                    console.log(payload);
+                    setLocation.setLocation(number, payload);
+                    twilio.sendMessage(number, "Setting your location to " + body[0].display_name);
+               });
 }

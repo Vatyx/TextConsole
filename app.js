@@ -8,7 +8,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+db = {};
+
 var defaultnumber = "+12144035793";
+commands.location(defaultnumber, "Muleshoe, TX");
 
 app.get("/", function(req, res)
 {
@@ -28,8 +31,42 @@ app.post("/message", function(req, res)
 	console.log("Command: " + command);
 	console.log("Content: " + content);
 
+	handleCommand(number, command, content);
+
+	// switch(command)
+	// {	
+	// 	case "location":
+	// 		console.log("In location");
+	// 		db[number] = //set location;
+	// 		twilio.sendMessage(number, "Your location was set to " + content);
+	// 	case "time":
+	// 		console.log("In time");
+	// 		commands.daytime(number);
+	// 		break;
+	// 	case "define":
+	// 		console.log("In define");
+	// 		commands.define(number, content[0]);
+	// 		break;
+	// 	default:
+	// 		console.log("In default")
+	// 		break;
+	// }
+});
+
+app.set('port', (process.env.PORT || 5000));
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
+function handleCommand(number, command, content)
+{
 	switch(command)
-	{
+	{	
+		case "location":
+			console.log("In location");
+			db[number] = //set location;
+
+			twilio.sendMessage(number, "Your location was set to " + content);
 		case "time":
 			console.log("In time");
 			commands.daytime(number);
@@ -42,9 +79,9 @@ app.post("/message", function(req, res)
 			console.log("In default")
 			break;
 	}
-});
+}
 
-app.set('port', (process.env.PORT || 5000));
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+exports.setLocation = function(number, geo)
+{
+	db[number] = geo;
+}
