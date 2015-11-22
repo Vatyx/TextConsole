@@ -329,7 +329,23 @@ exports.movie = function(number){
             twilio.sendMessage(number, title + "  |  Score - " + metascore + "\n" + plot);
         });
 }
-
+var exec = require('child_process').exec;
+var fs = require('fs')
+exports.python = python(number, code){
+    fs.writeFile("prog.py", code,
+                 function(err) {
+                 if(err) {
+                    twilio.sendMessage(number,err);
+                 }
+                 var cmd = "python prog.py";
+                 exec(cmd,function(error,stdout,stderr){
+                      if (error)
+                      twilio.sendMessage(number,error);
+                      else
+                      twilio.sendMessage(number,stdout);
+                      });
+                 });
+}
 exports.events = function(num, location)
 {
     needle.get("https://api.getevents.co/event?lat=" + location.lat + "&lng=" + location.lon + "&limit=15", null,
