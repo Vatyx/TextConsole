@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
 var defaultnumber = "+17186139960";
-commands.giphy(defaultnumber, ["cat"]);
+//commands.giphy(defaultnumber, ["cat"]);
 
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
@@ -71,6 +71,9 @@ function handleCommand(number, command, content)
 			console.log("In flip");
 			commands.flipCoin(number);
 			break;
+		case "giphy":
+			console.log("In giphy");
+			commands.giphy(number, content);
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
