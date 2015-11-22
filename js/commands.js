@@ -87,6 +87,7 @@ exports.weather = function(number,location){
                   results = results.replace(/Thunderstorms/g,"Thunderstorms \u26A1");
                   results = results.replace(/Wind/g,"Wind \u1F4A8");
                   }
+                  console.log(results);
                   twilio.sendMessage(number, results);
                   });
 
