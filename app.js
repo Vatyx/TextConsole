@@ -46,6 +46,7 @@ function handleCommand(number, command, content)
 	switch(command)
 	{	
 		case "location":
+		case "set":
 			console.log("In location");
 			commands.location(number, content)
 			break;
@@ -58,7 +59,7 @@ function handleCommand(number, command, content)
 			break;
 		case "define":
 			console.log("In define");
-			commands.define(number, content[0]);
+			commands.define(number, content);
 			break;
 		case "weather":
 			console.log("In weather");
@@ -77,6 +78,7 @@ function handleCommand(number, command, content)
 			break;
 		case "translate":
 			console.log("In translate");
+			console.log(content.substring(content.indexOf(" ") + 1));
 			commands.translate(number, content.split(" ")[0], content.substring(content.indexOf(" ") + 1));
 			break;
 		case "fliptable":
@@ -110,6 +112,7 @@ function handleCommand(number, command, content)
 		case "ingredients":
 			console.log("In ingredients");
 			commands.ingredients(number, content);
+			break;
 		case "email":
 			console.log("In email");
 			var to = content.split(" ")[0]
@@ -140,7 +143,7 @@ function handleCommand(number, command, content)
 		case "yoda":
 			console.log("In yoda");
 			commands.yoda(number, content);
-			break;
+			break
 		case "find":
 			console.log("In find");
 			if(db[number] === undefined)
@@ -148,8 +151,14 @@ function handleCommand(number, command, content)
 			else
 				commands.find(number, content, db[number]);
 			break;
+		case "news":
+			console.log("In news");
+			commands.news(number, content);
+			break;
 		case "python":
 			console.log("In python");
+			var attach = command.split("python");
+			content = attach + content;
 			commands.python(number, content);
 			break;
 		default:

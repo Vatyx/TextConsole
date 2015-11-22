@@ -133,7 +133,7 @@ exports.location = function(number, name)
 
 exports.giphy = function(number, query)
 {
-    var q = query.join("+");
+    var q = query.split(" ").join("+");
     needle.get("http://api.giphy.com/v1/gifs/search?q=" + q + "&api_key=dc6zaTOxFJmzC", null, 
         function(error, response, body)
         {
