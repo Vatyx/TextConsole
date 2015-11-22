@@ -28,8 +28,8 @@ exports.daytime = function(number, location)
                     break;
                 default:
             }
-            var date1 = new Date(utc).toString();
-            //twilio.sendMessage(number, date1);
+            var date1 = new Date(utc)
+            twilio.sendMessage(number, date1.toString());
         });
 }
 
