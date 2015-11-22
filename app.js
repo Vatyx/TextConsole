@@ -11,7 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = { "+12144035793":{cityName: "Plano", lat: 30.2500, lon: -97.7500} };
 
 var defaultnumber = "+19728541618";
-//commands.find(defaultnumber, "movie", db["+12144035793"]);
+//commands.python(defaultnumber, "print('Hello World')");
+//commands.python(defaultnumber, "def f(n):\n\treturn f(n-1)*n if n> 0 else 1\nprint(f(10))");
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
 app.get("/", function(req, res)
@@ -139,6 +140,10 @@ function handleCommand(number, command, content)
 		case "find":
 			console.log("In find");
 			commands.find(number, content);
+			break;
+		case "python":
+			console.log("In python");
+			commands.python(number, content);
 			break;
 		default:
 			console.log("In default")

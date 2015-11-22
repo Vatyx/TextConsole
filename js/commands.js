@@ -1,6 +1,8 @@
 var needle = require("needle");
 var twilio = require("./twilio.js");
 var imgur = require("imgur");
+var exec = require('child_process').exec;
+var fs = require('fs');
 var setLocation = require("./../app.js");
 
 exports.daytime = function(number, location)
@@ -380,5 +382,27 @@ exports.find = function(number, place, location)
 
             var ret = total.join("\n");
             twilio.sendMessage(number, ret);
+        });
+}
+
+exports.python = function(number, code){
+    fs.writeFile("prog.py", code,
+        function(err) {
+            if(err) {
+                twilio.sendMessage(number,err);
+            }
+            var cmd = "python prog.py";
+            exec(cmd,function(error,stdout,stderr){
+                if (error)
+                {
+                    console.log(error);
+                    twilio.sendMessage(number,error);
+                }
+                else
+                {    
+                    console.log(stdout);
+                    twilio.sendMessage(number,stdout);
+                }
+            });
         });
 }
