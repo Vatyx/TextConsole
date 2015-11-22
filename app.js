@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
 var defaultnumber = "+17186139960";
-commands.pick(defaultnumber, 2, ["1", "2", "3", "4", "5"]);
+//commands.pick(defaultnumber, 2, ["1", "2", "3", "4", "5"]);
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
 app.get("/", function(req, res)
@@ -25,7 +25,7 @@ app.post("/message", function(req, res)
 	var number = req.body.From;
 	//var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
 	var command = ((req.body.Body.split(" "))[0]).toLowerCase();
-	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(".");
+	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(". ");
 
 	console.log(req.body.Body);
 	console.log("From: " + number);
