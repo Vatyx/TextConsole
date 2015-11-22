@@ -183,6 +183,23 @@ exports.translate = function(number,to,words){
             twilio.sendMessage(number,result);
         });
 }
+exports.urbanDefine = function(number,word){
+    needle.get("http://api.urbandictionary.com/v0/define?term="+word,null,
+               function(error,response,body){
+                   function getRandomInt (min, max) {
+                        return Math.floor(Math.random() * (max - min)) + min;
+                   }
+                   var result = "";
+                   if (body.list.length === 0)
+                   result = "Word(s) not defined.\n";
+                   else {
+                   var i = getRandomInt(0,body.list.length);
+                   var result = body.list[i].definition + '\ne.g. ' + body.list[i].example;
+                   }
+                   twilio.sendMessage(number,result);
+               });
+
+}
 exports.sos = function(number){
     var phoneList = "211 – Local community information or social services (in some cities)\n" +
                     "311 – City government or non-emergency police matters\n" +
