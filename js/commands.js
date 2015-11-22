@@ -96,24 +96,26 @@ exports.flipCoin = function(number){
 }
 //wolframalpha ID: PXHV89-GUAVQU3V65
 var wolfram = require('wolfram-alpha').createClient("PXHV89-GUAVQU3V65", null);
-export.compute = function(number, expression){
+exports.compute = function(number, expression){
         wolfram.query(expression,
-                  function (error, body) {
-                      var url = "";
-                      var result = "";
-                  try{
-                      url = body[0].subpods[0].image;
-                      if (error)
-                      url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
-                      result = body[1].subpods[0].text;
-                  }catch(e){
-                      url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
-                      result = "result undefined.\n";
-                  }
-                  //url is the image and result is the text result
-                  console.log(url);
-                  console.log(result);
-                  });
+            function (error, body) {
+                var url = "";
+                var result = "";
+                try{
+                  url = body[0].subpods[0].image;
+                  if (error)
+                  url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
+                  result = body[1].subpods[0].text;
+                }catch(e){
+                  url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
+                  result = "No result found.\n";
+                }
+                //url is the image and result is the text result
+
+                twilio.sendMessagePicture(number, null, url);
+                if(result !== "")
+                    twilio.sendMessage(number, result);
+            });
 }
 
 exports.location = function(number, name)
@@ -127,11 +129,6 @@ exports.location = function(number, name)
                });
 }
 
-exports.imgur = function()
-{
-
-}
-
 exports.giphy = function(number, query)
 {
     var q = query.join("+");
@@ -142,6 +139,11 @@ exports.giphy = function(number, query)
             twilio.sendMessagePicture(number, null, body.data[0].images.original.url);
 
         });
+}
+
+exports.image = function(number, image)
+{
+
 }
 
 exports.invalidLocation = function(number)

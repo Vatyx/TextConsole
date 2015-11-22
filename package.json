@@ -14,6 +14,7 @@
     "express": "^4.13.3",
     "imgur": "^0.1.7",
     "needle": "^0.11.0",
-    "twilio": "^2.5.2"
+    "twilio": "^2.5.2",
+    "wolfram-alpha": "^0.3.0"
   }
 }
