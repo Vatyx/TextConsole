@@ -1,5 +1,6 @@
 var needle = require("needle");
 var twilio = require("./twilio.js");
+var imgur = require("imgur");
 var setLocation = require("./../app.js");
 
 exports.daytime = function(number, location)
@@ -56,6 +57,7 @@ exports.define = function(number, word){
                });
     
 }
+
 exports.weather = function(number,location){
         var now = new Date();
         var weatherUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
@@ -107,6 +109,18 @@ exports.location = function(number, name)
 exports.imgur = function()
 {
 
+}
+
+exports.giphy = function(number, query)
+{
+    var q = query.join("+");
+    needle.get("http://api.giphy.com/v1/gifs/search?q=" + q + "&api_key=dc6zaTOxFJmzC", null, 
+        function(error, response, body)
+        {
+            console.log(body.data[0].images.original.url);
+            twilio.sendMessagePicture(number, null, body.data[0].images.original.url);
+
+        });
 }
 
 exports.invalidLocation = function(number)

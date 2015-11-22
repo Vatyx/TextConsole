@@ -10,8 +10,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
-//var defaultnumber = "+12144035793";
-//commands.weather(defaultnumber, db[defaultnumber].cityName);
+var defaultnumber = "+17186139960";
+commands.giphy(defaultnumber, ["cat"]);
+
+//twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
 app.get("/", function(req, res)
 {
