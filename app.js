@@ -139,7 +139,10 @@ function handleCommand(number, command, content)
 			break;
 		case "find":
 			console.log("In find");
-			commands.find(number, content);
+			if(db[number] === undefined)
+				commands.invalidLocation(number);
+			else
+				commands.find(number, content, db[number]);
 			break;
 		case "python":
 			console.log("In python");
