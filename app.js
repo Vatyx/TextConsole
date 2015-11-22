@@ -8,10 +8,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-db = {};
+db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
 var defaultnumber = "+12144035793";
-commands.weather(defaultnumber, "Plano, TX");
+commands.daytime(defaultnumber, db["+12144035793"]);
 
 app.get("/", function(req, res)
 {
@@ -57,7 +57,10 @@ function handleCommand(number, command, content)
 			break;
 		case "weather":
 			console.log("In weather");
-			commands.weather(number, db[number].cityName);
+			if(db[number].cityName === undefined)
+				commands.invalidLocation(number);
+			else
+				commands.weather(number, db[number].cityName);
 			break;
 		default:
 			console.log("In default")

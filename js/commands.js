@@ -8,11 +8,11 @@ exports.daytime = function(number, location)
     var date = new Date();
     var utc = date.getUTCMilliseconds();
     var current_hour = date.toString();
-    //twilio.sendMessage(number, current_hour);
+    twilio.sendMessage(number, current_hour);
 
-    needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false" + name + "&format=json", null,
+    needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false", null,
         function(error,response,body){
-            switch(body.timeZoneBody[0])
+            switch(body.timeZoneName[0])
             {
                 case 'P':
                     utc -= 8 * 3600000;
@@ -28,7 +28,8 @@ exports.daytime = function(number, location)
                     break;
                 default:
             }
-            twilio.sendMessage(number, new Date(utc).toString());
+            var date1 = new Date(utc).toString();
+            //twilio.sendMessage(number, date1);
         });
 }
 
@@ -72,15 +73,15 @@ exports.weather = function(number,location){
                case "sunny":
                case "clear":
                case "fair":
-               iconUICode = "\U2600"; break;
+               iconUICode = "\u2600"; break;
                case "cloudy":
-               iconUICode = "\U2601"; break;
+               iconUICode = "\u2601"; break;
                case "snow":
-               iconUICode ="\U2744"; break;
+               iconUICode ="\u2744"; break;
                case "showers":
-               iconUICode = "\U2614"; break;
+               iconUICode = "\u2614"; break;
                case "partly cloudy":
-               iconUICode = "\U26C5"; break;
+               iconUICode = "\u26C5"; break;
                default:
                iconUICode = "";
                }
