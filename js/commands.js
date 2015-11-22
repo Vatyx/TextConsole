@@ -200,6 +200,7 @@ exports.urbanDefine = function(number,word){
                });
 
 }
+
 exports.news = function(number,section){
     section = section.toLowerCase();
     var predefinedSections = ["home","world","national","politics","nyregion","business","opinion",
@@ -210,9 +211,9 @@ exports.news = function(number,section){
                    function(error,response,body){
                    var results = "";
                    body = JSON.parse(body);
-                   for(var i = 0;i < body.results.length/4; ++i){
+                   for(var i = 0;i < body.results.length/10; ++i){
                    results += (i+1) +": "+ body.results[i].title;
-                   results += "\n" + body.results[i].abstract +"\n";
+                   results += "\n" + body.results[i].abstract +"\n\n";
                    }
                    twilio.sendMessage(number,results);
                    });
@@ -222,6 +223,7 @@ exports.news = function(number,section){
     }
 
 }
+
 exports.sos = function(number){
     var phoneList = "211 – Local community information or social services (in some cities)\n" +
                     "311 – City government or non-emergency police matters\n" +
@@ -309,4 +311,36 @@ exports.pick = function(number, numPick, listInput){
     }
     
     twilio.sendMessage(number, result.substring(0,result.lastIndexOf(",")));
+}
+
+exports.movie = function(number){
+        needle.get("http://www.myapifilms.com/imdb/inTheaters", null, 
+        function(error, response, body)
+        {
+            var titleList = [];
+            for(var size = 0; size < body.length; size++){ //go through dates
+                titleList = titleList.concat(body[size].movies);
+            }
+
+            var movie = titleList[Math.floor(Math.random()*titleList.length)]
+            var title = movie.title;
+            var plot = movie.simplePlot;
+            var metascore = movie.rating === "" ? "N/A" : movie.rating + "/10";
+            twilio.sendMessage(number, title + "  |  Score - " + metascore + "\n" + plot);
+        });
+}
+
+exports.events = function(number, location)
+{
+    needle.get("https://api.getevents.co/event?lat=" + location.lat + "&lng=" + location.lon + "&limit=15", null,
+        function(error, response, body)
+        {
+
+            var name = body.events[0].name
+            var desc = body.events[0].description === "" ? "No Description" : body.events[0].description;
+            var time = body.events[0].start_date;
+            var address = body.events[0].venue_meta.location.formattedAddress.join(" ");
+            //console.log(number, name + " - " + desc + "\n" + time + "\n" + address);
+            twilio.sendMessage(number, name + " - " + desc + "\n" + time + "\n" + address)
+        });
 }

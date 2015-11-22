@@ -8,10 +8,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
+db = { "+12144035793":{cityName: "Plano", lat: 30.2500, lon: -97.7500} };
 
-var defaultnumber = "+17186139960";
-//commands.pick(defaultnumber, 2, ["1", "2", "3", "4", "5"]);
+var defaultnumber = "+19728541618";
+commands.events(defaultnumber, db["+12144035793"]);
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
 app.get("/", function(req, res)
@@ -120,6 +120,11 @@ function handleCommand(number, command, content)
 		case "pick":
 			console.log("In pick");
 			commands.pick(number, Number(content[0]), content.splice(0));
+			break;
+		case "movie":
+			console.log("In movie");
+			commands.movie(number);
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
