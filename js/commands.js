@@ -40,7 +40,7 @@ exports.define = function(number, word){
                     var results = "";
                     var definitions = [];
                     for (var i = 0; i < body.results.length; ++i){
-                    if (body.results[i].headword.toLowerCase() === word.toLowerCase()){
+                    if (body.results[i].headword.toLowerCase() === word.toLowerCase() && body.results[i].senses[0].definition){
                         definitions.push(body.results[i].senses[0].definition[0]);
                         }
                     }
@@ -102,17 +102,17 @@ exports.compute = function(number, expression){
                 var url = "";
                 var result = "";
                 try{
-                  url = body[0].subpods[0].image;
-                  if (error)
-                  url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
-                  result = body[1].subpods[0].text;
+                    url = body[0].subpods[0].image;
+                    if (error || body[0].title === "Input")
+                         url = "";
+                    result = body[1].subpods[0].text;
                 }catch(e){
-                  url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
-                  result = "No result found.\n";
+                    url = "";
+                    result = "result undefined.\n";
                 }
-                //url is the image and result is the text result
 
-                twilio.sendMessagePicture(number, null, url);
+                if(url !== "")
+                    twilio.sendMessagePicture(number, null, url);
                 if(result !== "")
                     twilio.sendMessage(number, result);
             });
@@ -143,7 +143,13 @@ exports.giphy = function(number, query)
 
 exports.image = function(number, image)
 {
-
+    needle.get("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + image, null,
+        function(error, response, body)
+        {
+            var url = body.responseData.results[Math.floor(Math.random() * body.responseData.results.length)].url;
+            console.log(url);
+            twilio.sendMessagePicture(number, null, url);
+        });
 }
 
 exports.invalidLocation = function(number)
