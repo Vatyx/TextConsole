@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
-// var defaultnumber = "+12144035793";
-// commands.daytime(defaultnumber, db["+12144035793"]);
+//var defaultnumber = "+12144035793";
+//commands.weather(defaultnumber, db[defaultnumber].cityName);
 
 app.get("/", function(req, res)
 {
@@ -64,6 +64,10 @@ function handleCommand(number, command, content)
 				commands.invalidLocation(number);
 			else
 				commands.weather(number, db[number].cityName);
+			break;
+		case "flip":
+			console.log("In flip");
+			commands.flipCoin(number);
 			break;
 		default:
 			console.log("In default")

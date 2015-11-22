@@ -29,7 +29,7 @@ exports.daytime = function(number, location)
                 default:
             }
             var date = new Date(utc)
-            twilio.sendMessage(number, (date.toString()).replace("GMT+0000 (UTC)", "");
+            twilio.sendMessage(number, (date.toString()).replace("GMT+0000 (UTC)", ""));
         });
 }
 
@@ -87,10 +87,12 @@ exports.weather = function(number,location){
                   });
 
 }
-exports.flipCoin() = function(number){
-        var result = Math.round(Math.random()) === 0 ? "tail" : "head";
+
+exports.flipCoin = function(number){
+        var result = Math.round(Math.random()) === 0 ? "Tails" : "Heads";
         twilio.sendMessage(number, result);
 }
+
 exports.location = function(number, name)
 {
     needle.get("http://nominatim.openstreetmap.org/search?q=" + name + "&format=json", null,
