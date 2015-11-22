@@ -155,5 +155,5 @@ exports.sos = function(number){
 }
 
 exports.decide = function(number, listInput){
-    twilio.sendMessage(number, arrList[Math.floor(Math.random()*(arrList.length))]);
+    twilio.sendMessage(number, listInput[Math.floor(Math.random()*(listInput.length))]);
 }
