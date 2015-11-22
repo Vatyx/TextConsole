@@ -161,6 +161,30 @@ function handleCommand(number, command, content)
 			content = attach + content;
 			commands.python(number, content);
 			break;
+		case "ruby":
+			console.log("In python");
+			var attach = command.split("ruby");
+			content = attach + content;
+			commands.ruby(number, content);
+			break;
+		case "javascript":
+			console.log("In python");
+			var attach = command.split("javascript");
+			content = attach + content;
+			commands.javascript(number, content);
+			break;
+		case "java":
+			console.log("In python");
+			var attach = command.split("java");
+			content = attach + content;
+			commands.java(number, content);
+			break;
+		case "c++":
+			console.log("In python");
+			var attach = command.split("c++");
+			content = attach + content;
+			commands.cplusplus(number, content);
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
