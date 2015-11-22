@@ -50,6 +50,7 @@ function handleCommand(number, command, content)
 		case "help":
 			console.log("In help");
 			commands.help(number, content);
+			break;
 		case "location":
 		case "set":
 			console.log("In location");
