@@ -49,7 +49,7 @@ function handleCommand(number, command, content)
 	{	
 		case "help":
 			console.log("In help");
-			commands.help(number);
+			commands.help(number, content);
 		case "location":
 		case "set":
 			console.log("In location");
