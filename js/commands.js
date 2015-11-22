@@ -6,7 +6,7 @@ exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
     // var date = new Date();
-    // var utc = date.getTime();
+    var utc = date.getTime();
     // var current_hour = date.toString();
     // twilio.sendMessage(number, current_hour);
 
