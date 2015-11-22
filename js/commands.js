@@ -5,46 +5,64 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var setLocation = require("./../app.js");
 
-exports.help = function(number)
+var helpDict = 
 {
-    var help1 = "Available Commands:\n \
-           location (location) - Set your location\n \
-           set (location) - Set your location\n \
-           time - Get current time at set location\n \
-           define (phrase) - Get definition of phrase\n \
-           weather - Get weather forecast at set location\n \
-           flip - Flip a coin\n \
-           compute (expression) - Compute some mathematical function\n \
-           giphy (query) - Get random gif based on query\n \
-           image (query) - Get random image based on query\n \
-           fliptable - ???\n \
-           CSIMiami - ???\n \
-           random (lower) (upper) - Random number between lower and upper\n \
-           translate (lang code) (phrase) - Translate English phrase to another language\n \
-           urban (phrase) - Get UrbanDictionary definition of phrase\n \
-           news (section) - Get 3 news headlines from a specific section\n \
-           sos - Get Emergency contact information";
+    "help": "help (command) - Get more information about a command",
+    "location": "location (location) - Set your location",
+    "set": "set (location) - Set your location",
+    "time": "time - Get current time at set location",
+    "define": "define (phrase) - Get definition of phrase",
+    "weather": "weather - Get weather forecast at set location",
+    "flip": "flip - Flip a coin",
+    "compute": "compute (expression) - Compute some mathematical function. For instance \"2 + 3 * 5\", \"solve 10 = x - 4\", \"derivative of x^2\"",
+    "giphy": "giphy (query) - Get random gif based on query",
+    "image": "image (query) - Get random image based on query",
+    "fliptable": "fliptable - ???",
+    "CSIMiami": "CSIMiami - ???",
+    "random": "random (lower) (upper) - Random number between lower and upper",
+    "translate": "translate (language code) (phrase) - Translate English phrase to another language. Language Code can be es (Spanish), fr (French), zh-cn (Chinese), de (German), ja (Japanese) etc.",
+    "urban": "urban (phrase) - Get UrbanDictionary definition of phrase",
+    "news": "news (section) - Get 3 news headlines from a specific section. Section can be home, world, national, politics, business, opinion, technology, science, health, sports, arts, fashion, dining, travel, magazine, realestate",
+    "sos": "sos - Get Emergency contact information",
+    "decide": "decide (item one) / (item two) / ... / (last item) - Choose one item.",
+    "ingredients": "Get list of ingredients for specific reciepe",
+    "email": "email (address) (subject) / (body) - Send email to address with subject and body. Example: friend@example.com Our Meeting / Ready for our meeting? Looking forward to seeing you there.",
+    "pick": "pick (number) (item one) / (item two) / ... / (last item) - Choose a number of items",
+    "movie": "movie - Get random movie which is currently showing",
+    "event": "event - Get random event that is around set location",
+    "yoda": "yoda (text) - Translate text to how yoda would speak",
+    "find": "find (type) - Find a type of place around the location set. Type can be movie (movie theater), restaurant, hotel, travel, barclub, spabeauty, shopping.",
+    "python": "python (code) - Execute Python code",
+    "ruby": "ruby (code) - Execute Ruby code",
+    "c++": "c++ (code) - Execute C++ code",
+    "java": "java (code) - Execute Java code",
+    "javascript": "javascript (code) - Execute Javascript code",
+    "fact": "fact - Get random fact",
+    "joke": "joke - Get random joke",
+    "pug": "pug - Get pug"
 
-    var help2 = "decide (item one) / (item two) / ... / (last item) - Choose one item\n \
-           ingredients (reciepe) - Get list of ingredients for specific reciepe\n \
-           email (address) (subject) / (body) - Send email to address with subject and body\n \
-           pick (number) (item one) / (item two) / ... / (last item) - Choose a number of items\n \
-           movie - Get random movie which is currently showing\n \
-           event - Get random event that is around set location\n \
-           yoda (text) - Translate text to how yoda would speak\n \
-           find (type) - Find a type of place around the location set\n \
-           python (code) - Execute Python code\n \
-           ruby (code) - Execute Ruby code\n \
-           c++ (code) - Execute C++ code\n \
-           java (code) - Execute Java code\n \
-           javascript (code) - Execute Javascript code\n \
-           fact - Get random fact\n \
-           joke - Get a random joke\n \
-           pug - Get image of pug";
+};
 
-    console.log(help1);
-    twilio.sendMessage(number, help1);
-    twilio.sendMessage(number, help2);
+exports.help = function(number, command)
+{
+    if(command == undefined)
+    {
+        var help = "Available Commands:\n" + Object.keys(helpDict).join(", ");
+        console.log(help);
+        twilio.sendMessage(number, help);
+        return;
+    }
+    else
+    {
+        var newHelp = helpDict[command];
+
+        if(newHelp == undefined)
+        {
+            twilio.sendMessage(number, "Command does not exist.");
+            return;
+        }
+        twilio.sendMessage(number, newHelp);
+    }
 }
 
 exports.daytime = function(number, location)
@@ -404,6 +422,7 @@ exports.yoda = function(number, text)
 
 exports.find = function(number, place, location)
 {
+    place = place.toLowerCase();
     needle.get("http://api.citygridmedia.com/content/places/v2/search/latlon?type=" + place + "&lat=" + location.lat + "&lon=" + location.lon + "&radius=10&publisher=test&format=json", null,
         function(error, response, body)
         {
