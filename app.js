@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = { "+12144035793":{cityName: "Plano", lat: 30.2500, lon: -97.7500} };
 
 var defaultnumber = "+19728541618";
-//commands.events(defaultnumber, db["+12144035793"]);
+//commands.find(defaultnumber, "movie", db["+12144035793"]);
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
 app.get("/", function(req, res)
@@ -131,6 +131,14 @@ function handleCommand(number, command, content)
 				commands.invalidLocation(number);
 			else
 				commands.events(number, db[number]);
+			break;
+		case "yoda":
+			console.log("In yoda");
+			commands.yoda(number, content);
+			break;
+		case "find":
+			console.log("In find");
+			commands.find(number, content);
 			break;
 		default:
 			console.log("In default")
