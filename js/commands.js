@@ -5,10 +5,10 @@ var setLocation = require("./../app.js");
 exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
-    var date = new Date();
-    var utc = date.getTime();
-    var current_hour = date.toString();
-    twilio.sendMessage(number, current_hour);
+    // var date = new Date();
+    // var utc = date.getTime();
+    // var current_hour = date.toString();
+    // twilio.sendMessage(number, current_hour);
 
     needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false", null,
         function(error,response,body){
@@ -28,8 +28,8 @@ exports.daytime = function(number, location)
                     break;
                 default:
             }
-            var date1 = new Date(utc)
-            twilio.sendMessage(number, date1.toString());
+            var date = new Date(utc)
+            twilio.sendMessage(number, (date.toString()).replace("GMT+0000 (UTC)", "");
         });
 }
 

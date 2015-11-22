@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 db = { "+12144035793":{cityName: "Plano", lat: 33.4500, lon: -112.0667} };
 
-var defaultnumber = "+12144035793";
-commands.daytime(defaultnumber, db["+12144035793"]);
+// var defaultnumber = "+12144035793";
+// commands.daytime(defaultnumber, db["+12144035793"]);
 
 app.get("/", function(req, res)
 {
@@ -49,7 +49,10 @@ function handleCommand(number, command, content)
 			break;
 		case "time":
 			console.log("In time");
-			commands.daytime(number);
+			if(db[number] === undefined)
+				commands.invalidLocation(number);
+			else
+				commands.daytime(number, db[number]);
 			break;
 		case "define":
 			console.log("In define");
@@ -57,7 +60,7 @@ function handleCommand(number, command, content)
 			break;
 		case "weather":
 			console.log("In weather");
-			if(db[number].cityName === undefined)
+			if(db[number] === undefined)
 				commands.invalidLocation(number);
 			else
 				commands.weather(number, db[number].cityName);
