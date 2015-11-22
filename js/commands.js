@@ -1,6 +1,8 @@
 var needle = require("needle");
 var twilio = require("./twilio.js");
 var imgur = require("imgur");
+var exec = require('child_process').exec;
+var fs = require('fs');
 var setLocation = require("./../app.js");
 
 exports.daytime = function(number, location)
@@ -342,5 +344,64 @@ exports.events = function(num, location)
             //console.log(number, name + " - " + desc + "\n" + time + "\n" + address);
             console.log(name + " - " + desc + "\n" + time + "\n" + address);
             twilio.sendMessage(num, name + " - " + desc + "\n" + time + "\n" + address)
+        });
+}
+
+exports.yoda = function(number, text)
+{
+    needle.get("http://funtranslations.com/yoda?text=" + text, null,
+        function(error, response, body)
+        {
+            var without = body.replace(/<(?:.|\n)*?>/gm, '');
+            var a = "In Yodish...";
+            var text = without.substring(without.indexOf("In Yodish...") + a.length, without.indexOf("Type your text below to convert to Yoda"));
+            twilio.sendMessage(number, text.trim());
+        });
+}
+
+exports.find = function(number, place, location)
+{
+    needle.get("http://api.citygridmedia.com/content/places/v2/search/latlon?type=" + place + "&lat=" + location.lat + "&lon=" + location.lon + "&radius=10&publisher=test&format=json", null,
+        function(error, response, body)
+        {
+            var loc = body.results.locations;
+            var i = 0;
+            var total = [];
+
+            while (i < loc.length && i < 3)
+            {
+                var rand = Math.floor(Math.random() * loc.length);
+
+                var name = loc[rand].name;
+                var address = loc[rand].address.street + "\n" + loc[rand].address.city + ", " + loc[rand].address.state + " " + loc[rand].address.postal_code;
+                total.push(i+1 + ". " + name + "\n" + address + "\n");
+                loc.splice(rand, 1);
+                i += 1;
+            }
+
+            var ret = total.join("\n");
+            twilio.sendMessage(number, ret);
+        });
+}
+
+exports.python = function(number, code){
+    fs.writeFile("prog.py", code,
+        function(err) {
+            if(err) {
+                twilio.sendMessage(number,err);
+            }
+            var cmd = "python prog.py";
+            exec(cmd,function(error,stdout,stderr){
+                if (error)
+                {
+                    console.log(error);
+                    twilio.sendMessage(number,error);
+                }
+                else
+                {    
+                    console.log(stdout);
+                    twilio.sendMessage(number,stdout);
+                }
+            });
         });
 }
