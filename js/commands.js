@@ -106,7 +106,9 @@ exports.location = function(number, name)
 }
 
 exports.imgur = function()
+{
 
+}
 
 exports.invalidLocation = function(number)
 {
