@@ -104,7 +104,7 @@ function handleCommand(number, command, content)
 			break;
 		case "csimiami":
 			console.log("In csimiami");
-			commands.image(number);
+			commands.CSIMiami(number);
 			break;
 		case "ingredients":
 			console.log("In ingredients");
