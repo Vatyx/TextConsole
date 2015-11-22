@@ -47,8 +47,8 @@ function handleCommand(number, command, content)
 {
 	switch(command)
 	{	
-		case "help!":
-			console.log("In help");
+		case "man":
+			console.log("In man");
 			commands.help(number, content);
 			break;
 		case "location":

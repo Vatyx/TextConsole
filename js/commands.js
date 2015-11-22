@@ -48,7 +48,7 @@ exports.help = function(number, command)
     console.log("This is the command " + command)
     if(command == undefined || command == "")
     {
-        var help = "Available Commands:\n" + Object.keys(helpDict).join(", ");
+        var help = "~~Welcome to Pocket Terminal!~~\n\nAvailable Commands:\n" + Object.keys(helpDict).join(", ");
         console.log(help);
         twilio.sendMessage(number, help);
         return;
