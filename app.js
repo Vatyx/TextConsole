@@ -102,6 +102,10 @@ function handleCommand(number, command, content)
 			console.log("In image");
 			commands.image(number, content);
 			break;
+		case "csimiami":
+			console.log("In csimiami");
+			commands.image(number);
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
