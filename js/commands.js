@@ -57,42 +57,39 @@ exports.define = function(number, word){
     
 }
 exports.weather = function(number,location){
-    var now = new Date();
-    var weatherUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
-    needle.get(weatherUrl,null,
-               function(error,response,body){
-               //body.query
-               var results = "";
-               if (body.query.count == 0){
-               results = "Invalid location.\n";
-               }else{
-               var detailLocation = body.query.results.channel.location;
-               var condition = body.query.results.channel.item.condition.text.toLowerCase();
-               var iconUICode = "";
-               switch (condition){
-               case "sunny":
-               case "clear":
-               case "fair":
-               iconUICode = "\u2600"; break;
-               case "cloudy":
-               iconUICode = "\u2601"; break;
-               case "snow":
-               iconUICode ="\u2744"; break;
-               case "showers":
-               iconUICode = "\u2614"; break;
-               case "partly cloudy":
-               iconUICode = "\u26C5"; break;
-               default:
-               iconUICode = "";
-               }
-               results = body.query.results.channel.item.description.replace(/<(?:.|\n)*?>/gm, '');
-               results = results.replace("Current Conditions:\n","Current Conditions for " + detailLocation.city + "," + detailLocation.region + "," + detailLocation.country + "\n" + iconUICode + iconUICode + iconUICode);
-               results = results.replace("Full Forecast at Yahoo! Weather\n","");
-               results = results.replace("(provided by The Weather Channel)\n","");
-               }
-               twilio.sendMessage(number, results);
-    });
+        var now = new Date();
+        var weatherUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
+        needle.get(weatherUrl,null,
+                  function(error,response,body){
+                  //body.query
+                  var results = "";
+                  if (body.query.count == 0){
+                  results = "Invalid location.\n";
+                  }else{
+                  var detailLocation = body.query.results.channel.location;
+                  var condition = body.query.results.channel.item.condition.text.toLowerCase();
+                  results = body.query.results.channel.item.description.replace(/<(?:.|\n)*?>/gm, '');
+                  results = results.replace("Current Conditions:\n","Current Conditions for " + detailLocation.city + "," + detailLocation.region + "," + detailLocation.country + "\n");
+                  results = results.replace("Full Forecast at Yahoo! Weather\n","");
+                  results = results.replace("(provided by The Weather Channel)\n","");
+                  //adding emoji to the text
+                  results = results.replace(/Sunny/g,"Sunny\u2600");
+                  results = results.replace(/Clear/g,"Clear\u2600");
+                  results = results.replace(/Fair/g,"Fair\u2600");
+                  results = results.replace(/Cloudy/g,"Cloudy\u2601");
+                  results = results.replace(/Partly Cloudy\u2601/g,"Partly Cloudy\u26C5");
+                  results = results.replace(/Snow/g,"Snow\u2744");
+                  results = results.replace(/Showers/g,"Showers\u2614");
+                  results = results.replace(/Thunderstorms/g,"Thunderstorms\u26A1");
+                  results = results.replace(/Wind/g,"Wind\u1F4A8");
+                  }
+                  twilio.sendMessage(number, results);
+                  });
 
+}
+exports.flipCoin() = function(number){
+        var result = Math.round(Math.random()) === 0 ? "tail" : "head";
+        twilio.sendMessage(number, result);
 }
 exports.location = function(number, name)
 {
