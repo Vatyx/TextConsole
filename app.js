@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = { "+12144035793":{cityName: "Plano", lat: 30.2500, lon: -97.7500} };
 
 var defaultnumber = "+19728541618";
-//commands.python(defaultnumber, "print('Hello World')");
+//commands.help(defaultnumber);
 //commands.python(defaultnumber, "def f(n):\n\treturn f(n-1)*n if n> 0 else 1\nprint(f(10))");
 //twilio.sendMessagePicture(defaultnumber, "Hi there", "http://media2.giphy.com/media/FiGiRei2ICzzG/giphy.gif");
 
@@ -47,6 +47,9 @@ function handleCommand(number, command, content)
 {
 	switch(command)
 	{	
+		case: "help":
+			console.log("In help");
+			commands.help(number);
 		case "location":
 		case "set":
 			console.log("In location");

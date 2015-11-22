@@ -5,6 +5,48 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 var setLocation = require("./../app.js");
 
+exports.help = function(number)
+{
+    var help1 = "Available Commands:\n \
+           location (location) - Set your location\n \
+           set (location) - Set your location\n \
+           time - Get current time at set location\n \
+           define (phrase) - Get definition of phrase\n \
+           weather - Get weather forecast at set location\n \
+           flip - Flip a coin\n \
+           compute (expression) - Compute some mathematical function\n \
+           giphy (query) - Get random gif based on query\n \
+           image (query) - Get random image based on query\n \
+           fliptable - ???\n \
+           CSIMiami - ???\n \
+           random (lower) (upper) - Random number between lower and upper\n \
+           translate (lang code) (phrase) - Translate English phrase to another language\n \
+           urban (phrase) - Get UrbanDictionary definition of phrase\n \
+           news (section) - Get 3 news headlines from a specific section\n \
+           sos - Get Emergency contact information";
+
+    var help2 = "decide (item one) / (item two) / ... / (last item) - Choose one item\n \
+           ingredients (reciepe) - Get list of ingredients for specific reciepe\n \
+           email (address) (subject) / (body) - Send email to address with subject and body\n \
+           pick (number) (item one) / (item two) / ... / (last item) - Choose a number of items\n \
+           movie - Get random movie which is currently showing\n \
+           event - Get random event that is around set location\n \
+           yoda (text) - Translate text to how yoda would speak\n \
+           find (type) - Find a type of place around the location set\n \
+           python (code) - Execute Python code\n \
+           ruby (code) - Execute Ruby code\n \
+           c++ (code) - Execute C++ code\n \
+           java (code) - Execute Java code\n \
+           javascript (code) - Execute Javascript code\n \
+           fact - Get random fact\n \
+           joke - Get a random joke\n \
+           pug - Get image of pug";
+
+    console.log(help1);
+    twilio.sendMessage(number, help1);
+    twilio.sendMessage(number, help2);
+}
+
 exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
@@ -317,12 +359,12 @@ exports.pick = function(number, numPick, listInput){
 }
 
 exports.movie = function(number){
-        needle.get("http://www.myapifilms.com/imdb/inTheaters", null, 
+        needle.get("http://api.myapifilms.com/imdb/inTheaters?token=0ec223a4-34ab-46f9-850e-c2ddb3586e32", null, 
         function(error, response, body)
         {
             var titleList = [];
-            for(var size = 0; size < body.length; size++){ //go through dates
-                titleList = titleList.concat(body[size].movies);
+            for(var size = 0; size < body.data.inTheaters.length; size++){ //go through dates
+                titleList = titleList.concat(body.data.inTheaters[size].movies);    
             }
 
             var movie = titleList[Math.floor(Math.random()*titleList.length)]
