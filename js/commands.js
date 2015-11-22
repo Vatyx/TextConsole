@@ -132,3 +132,28 @@ exports.invalidCommand = function(number, command)
 {
     twilio.sendMessage(number, command + " is not a valid command.");
 }
+
+exports.flipTable = function(number)
+{
+    twilio.sendMessage(number, "(╯°□°）╯︵ ┻━┻");
+}
+
+exports.random = function(number, lower, upper){
+    twilio.sendMessage(number, Math.floor(rand = Math.floor(Math.random()*(upper-lower+1) + lower))); 
+}
+
+exports.sos = function(number){
+    var phoneList = "211 – Local community information or social services (in some cities)\n" +
+                    "311 – City government or non-emergency police matters\n" +
+                    "411 – Local telephone directory service (Some telephone companies provide national directory assistance)\n" +
+                    "511 – Traffic, road, and tourist information\n" +
+                    "611 – Telephone line repair service, mobile telephone company customer service\n" +
+                    "711 – Relay service for customers with hearing or speech disabilities\n" +
+                    "811 – Dig safe pipe/cable location in the United States, non-urgent telehealth/teletriage services in Canada\n" +
+                    "911 – Emergency telephone number – fire brigade, ambulance, police ";
+    twilio.sendMessage(number, phoneList);
+}
+
+exports.decide = function(number, listInput){
+    twilio.sendMessage(number, arrList[Math.floor(Math.random()*(arrList.length))]);
+}
