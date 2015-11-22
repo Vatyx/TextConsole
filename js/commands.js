@@ -405,3 +405,84 @@ exports.python = function(number, code){
             });
         });
 }
+exports.ruby = function(code){
+    fs.writeFile("prog.rb", code,
+                 function(err) {
+                 if(err) {
+                 twilio.sendMessage(number,err);
+                 }
+                 var cmd = "ruby prog.rb";
+                 exec(cmd,function(error,stdout,stderr){
+                      if (error)
+                      twilio.sendMessage(number,error);
+                      else
+                      twilio.sendMessage(number,stdout);
+                      });
+                 
+                 });
+    
+}
+exports.cplusplus = function(code){
+    fs.writeFile("prog.cpp", code,
+                 function(err) {
+                 if(err) {
+                 twilio.sendMessage(number,err);
+                 }
+                 var cmd = "g++ -std=c++11 prog.cpp";
+                 exec(cmd,function(error,stdout,stderr){
+                      if (error)
+                      twilio.sendMessage(number,error);
+                      else{
+                      exec("./a.out",function(error,stdout,stderr){
+                           if (error)
+                           twilio.sendMessage(number,error);
+                           else
+                           twilio.sendMessage(number,stdout);
+                           });
+                      }
+                      });
+                 
+                 });
+    
+}
+
+exports.java = function(code){
+    fs.writeFile("Prog.java", code,
+                 function(err) {
+                 if(err) {
+                 twilio.sendMessage(number,err);
+                 }
+                 var cmd = "javac Prog.java";
+                 exec(cmd,function(error,stdout,stderr){
+                      if (error)
+                      twilio.sendMessage(number,error);
+                      else{
+                      exec("java Prog",function(error,stdout,stderr){
+                           if (error)
+                           twilio.sendMessage(number,error);
+                           else
+                           twilio.sendMessage(number,stdout);
+                           });
+                      }
+                      });
+                 
+                 });
+}
+
+
+exports.javascript = function(code){
+    fs.writeFile("prog.js", code,
+                 function(err) {
+                 if(err) {
+                 twilio.sendMessage(number,err);
+                 }
+                 var cmd = "node prog.js";
+                 exec(cmd,function(error,stdout,stderr){
+                      if (error)
+                      twilio.sendMessage(number,error);
+                      else
+                      twilio.sendMessage(number,stdout);
+                      });
+                 
+                 });
+}
