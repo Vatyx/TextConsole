@@ -330,17 +330,18 @@ exports.movie = function(number){
         });
 }
 
-exports.events = function(number, location)
+exports.events = function(num, location)
 {
     needle.get("https://api.getevents.co/event?lat=" + location.lat + "&lng=" + location.lon + "&limit=15", null,
         function(error, response, body)
         {
-
-            var name = body.events[0].name
-            var desc = body.events[0].description === "" ? "No Description" : body.events[0].description;
-            var time = body.events[0].start_date;
-            var address = body.events[0].venue_meta.location.formattedAddress.join(" ");
+            var number = Math.floor(Math.random()*body.events.length);
+            var name = body.events[number].name
+            var desc = body.events[number].description === "" ? "No Description" : body.events[number].description;
+            var time = body.events[number].start_date;
+            var address = body.events[number].venue.address.street + " " + body.events[number].venue.address.city + " " + body.events[number].venue.address.zip;
             //console.log(number, name + " - " + desc + "\n" + time + "\n" + address);
-            twilio.sendMessage(number, name + " - " + desc + "\n" + time + "\n" + address)
+            console.log(name + " - " + desc + "\n" + time + "\n" + address);
+            twilio.sendMessage(num, name + " - " + desc + "\n" + time + "\n" + address)
         });
 }
