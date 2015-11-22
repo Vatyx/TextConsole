@@ -181,6 +181,18 @@ function handleCommand(number, command, content)
 			console.log("In c++");
 			commands.cpp(number, content);
 			break;
+		case "fact":
+			console.log("in fact");
+			commmands.fact(number);
+			break;
+		case "joke":
+			console.log("in joke");
+			commmands.joke(number);
+			break;
+		case "pug":
+			console.log("in pug");
+			commmands.image(number, "pug");
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);

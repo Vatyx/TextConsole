@@ -467,7 +467,7 @@ exports.java = function(number, code){
                  });
               }
           });
-           
+
        });
 }
 
@@ -485,6 +485,25 @@ exports.javascript = function(number, code){
               else
                   twilio.sendMessage(number,stdout);
           });
-           
+
        });
+}
+
+
+exports.fact = function (number){
+    needle.get("http://numbersapi.com/random", null, 
+    function(error, response, body)
+    {
+         twilio.sendMessage(number,body);
+    });
+}
+
+exports.joke = function (number){
+    needle.get("http://tambal.azurewebsites.net/joke/random", null, 
+    function(error, response, body)
+    {
+        console.log(body.joke);
+        twilio.sendMessage(number, body.joke);
+
+    });
 }
