@@ -32,25 +32,6 @@ app.post("/message", function(req, res)
 	console.log("Content: " + content);
 
 	handleCommand(number, command, content);
-
-	// switch(command)
-	// {	
-	// 	case "location":
-	// 		console.log("In location");
-	// 		db[number] = //set location;
-	// 		twilio.sendMessage(number, "Your location was set to " + content);
-	// 	case "time":
-	// 		console.log("In time");
-	// 		commands.daytime(number);
-	// 		break;
-	// 	case "define":
-	// 		console.log("In define");
-	// 		commands.define(number, content[0]);
-	// 		break;
-	// 	default:
-	// 		console.log("In default")
-	// 		break;
-	// }
 });
 
 app.set('port', (process.env.PORT || 5000));
@@ -64,9 +45,8 @@ function handleCommand(number, command, content)
 	{	
 		case "location":
 			console.log("In location");
-			db[number] = //set location;
-
-			twilio.sendMessage(number, "Your location was set to " + content);
+			commands.location(number, content)
+			console.log(db[number]);
 		case "time":
 			console.log("In time");
 			commands.daytime(number);
@@ -75,8 +55,12 @@ function handleCommand(number, command, content)
 			console.log("In define");
 			commands.define(number, content[0]);
 			break;
+		case "weather":
+			console.log("In weather");
+			break;
 		default:
 			console.log("In default")
+			commands.invalidCommand(number, command);
 			break;
 	}
 }

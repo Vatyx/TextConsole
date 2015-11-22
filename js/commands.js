@@ -38,9 +38,20 @@ exports.location = function(number, name)
 {
     needle.get("http://nominatim.openstreetmap.org/search?q=" + name + "&format=json", null,
               function(error,response,body){
-                    var payload = { lat: body[0].lat, lon:body[0].lon}
+                    var payload = { cityName: body[0].display_name, lat: body[0].lat, lon:body[0].lon}
                     console.log(payload);
                     setLocation.setLocation(number, payload);
                     twilio.sendMessage(number, "Setting your location to " + body[0].display_name);
                });
+}
+
+
+exports.invalidLocation = function(number)
+{
+    twilio.sendMessage(number, "A location is not set for this number.");
+}
+
+exports.invalidCommand = function(number, command)
+{
+    twilio.sendMessage(number, command + " is not a valid command.");
 }
