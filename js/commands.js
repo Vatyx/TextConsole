@@ -44,8 +44,26 @@ exports.weather = function(number,location){
                results = "Invalid location.\n";
                }else{
                var detailLocation = body.query.results.channel.location;
+               var condition = body.query.results.channel.item.condition.text.toLowerCase();
+               var iconUICode = "";
+               switch (condition){
+               case "sunny":
+               case "clear":
+               case "fair":
+               iconUICode = "\U2600"; break;
+               case "cloudy":
+               iconUICode = "\U2601"; break;
+               case "snow":
+               iconUICode ="\U2744"; break;
+               case "showers":
+               iconUICode = "\U2614"; break;
+               case "partly cloudy":
+               iconUICode = "\U26C5"; break;
+               default:
+               iconUICode = "";
+               }
                results = body.query.results.channel.item.description.replace(/<(?:.|\n)*?>/gm, '');
-               results = results.replace("Current Conditions:\n","Current Conditions for " + detailLocation.city + "," + detailLocation.region + "," + detailLocation.country + "\n");
+               results = results.replace("Current Conditions:\n","Current Conditions for " + detailLocation.city + "," + detailLocation.region + "," + detailLocation.country + "\n" + iconUICode + iconUICode + iconUICode);
                results = results.replace("Full Forecast at Yahoo! Weather\n","");
                results = results.replace("(provided by The Weather Channel)\n","");
                }
