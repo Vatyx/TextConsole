@@ -26,7 +26,7 @@ app.post("/message", function(req, res)
 	var number = req.body.From;
 	//var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
 	var command = ((req.body.Body.split(" "))[0]).toLowerCase();
-	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim().split(". ");
+	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim();
 
 	console.log(req.body.Body);
 	console.log("From: " + number);
@@ -77,7 +77,7 @@ function handleCommand(number, command, content)
 			break;
 		case "translate":
 			console.log("In translate");
-			commands.translate(number, content[0], content[1]);
+			commands.translate(number, content.split(" ")[0], content.substring(content.indexOf(" ") + 1));
 			break;
 		case "fliptable":
 			console.log("In flip table");
@@ -85,7 +85,7 @@ function handleCommand(number, command, content)
 			break;
 		case "random":
 			console.log("In random");
-			commands.random(number, content[0], content[1]);
+			commands.random(number, content.split(" ")[0], content.substring(content.indexOf(" ") + 1));
 			break;
 		case "sos":
 			console.log("In sos");
@@ -93,7 +93,7 @@ function handleCommand(number, command, content)
 			break;
 		case "decide":
 			console.log("In decide");
-			commands.decide(number, content);
+			commands.decide(number, content.split("/"));
 			break;
 		case "compute":
 			console.log("In compute");
@@ -112,7 +112,9 @@ function handleCommand(number, command, content)
 			commands.ingredients(number, content);
 		case "email":
 			console.log("In email");
-			commands.email(number, content[0], content[1], content[2]);
+			var to = content.split(" ")[0]
+			content = content.substring(content.indexOf(" ") + 1).split("/");
+			commands.email(number, to, content[0], content[1]);
 			break;
 		case "urban":
 			console.log("In urban");
@@ -120,7 +122,9 @@ function handleCommand(number, command, content)
 			break;
 		case "pick":
 			console.log("In pick");
-			commands.pick(number, Number(content[0]), content.splice(0));
+			var num = Number(content.split(" ")[0]);
+			content = content.substring(content.indexOf(" ") + 1).split("/");
+			commands.pick(number, num, content);
 			break;
 		case "movie":
 			console.log("In movie");
