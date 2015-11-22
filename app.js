@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 db = {};
 
 //var defaultnumber = "+12144035793";
-//commands.location(defaultnumber, "Muleshoe, TX");
+//commands.weather(defaultnumber, "Plano, TX");
 
 app.get("/", function(req, res)
 {
@@ -46,7 +46,7 @@ function handleCommand(number, command, content)
 		case "location":
 			console.log("In location");
 			commands.location(number, content)
-			console.log(db[number]);
+			break;
 		case "time":
 			console.log("In time");
 			commands.daytime(number);
@@ -57,6 +57,7 @@ function handleCommand(number, command, content)
 			break;
 		case "weather":
 			console.log("In weather");
+			commands.weather(number, db[number].cityName);
 			break;
 		default:
 			console.log("In default")

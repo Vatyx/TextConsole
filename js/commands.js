@@ -50,7 +50,7 @@ exports.weather = function(number,location){
                results = results.replace("(provided by The Weather Channel)\n","");
                }
                twilio.sendMessage(number, results);
-               });
+    });
 
 }
 exports.location = function(number, name)
