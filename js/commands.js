@@ -75,15 +75,15 @@ exports.weather = function(number,location){
                   results = results.replace("Full Forecast at Yahoo! Weather\n","");
                   results = results.replace("(provided by The Weather Channel)\n","");
                   //adding emoji to the text
-                  results = results.replace(/Sunny/g,"Sunny\u2600");
-                  results = results.replace(/Clear/g,"Clear\u2600");
-                  results = results.replace(/Fair/g,"Fair\u2600");
-                  results = results.replace(/Cloudy/g,"Cloudy\u2601");
-                  results = results.replace(/Partly Cloudy\u2601/g,"Partly Cloudy\u26C5");
-                  results = results.replace(/Snow/g,"Snow\u2744");
-                  results = results.replace(/Showers/g,"Showers\u2614");
-                  results = results.replace(/Thunderstorms/g,"Thunderstorms\u26A1");
-                  results = results.replace(/Wind/g,"Wind\u1F4A8");
+                  results = results.replace(/Sunny/g,"Sunny \u2600");
+                  results = results.replace(/Clear/g,"Clear \u2600");
+                  results = results.replace(/Fair/g,"Fair \u2600");
+                  results = results.replace(/Cloudy/g,"Cloudy \u2601");
+                  results = results.replace(/Partly Cloudy \u2601/g,"Partly Cloudy \u26C5");
+                  results = results.replace(/Snow/g,"Snow \u2744");
+                  results = results.replace(/Showers/g,"Showers \u2614");
+                  results = results.replace(/Thunderstorms/g,"Thunderstorms \u26A1");
+                  results = results.replace(/Wind/g,"Wind \u1F4A8");
                   }
                   twilio.sendMessage(number, results);
                   });
@@ -167,6 +167,11 @@ exports.flipTable = function(number)
     twilio.sendMessage(number, "(╯°□°）╯︵ ┻━┻");
 }
 
+exports.CSIMiami = function(number)
+{
+    twilio.sendMessage(number, "•_•)\n( •_•)>⌐■-■\n(⌐■_■)\n");
+}
+
 exports.random = function(number, lower, upper){
     twilio.sendMessage(number, Math.floor(rand = Math.floor(Math.random()*(upper-lower+1) + lower))); 
 }
@@ -185,4 +190,24 @@ exports.sos = function(number){
 
 exports.decide = function(number, listInput){
     twilio.sendMessage(number, listInput[Math.floor(Math.random()*(listInput.length))]);
+}
+
+exports.ingredients = function(number, reciepe)
+{
+    needle.get("http://www.recipepuppy.com/api/?q=" + reciepe + "&format=json", null,
+        function(error, response, body)
+        {
+            var sending = "";
+            var max = 0;
+            for (food in body.results)
+            {
+                var num = body.results[food].ingredients.replace(/[^,]/g, "").length
+                if(num > max)
+                {
+                    max = num;
+                    sending = body.results[food].ingredients;
+                }
+            }
+            twilio.sendMessage(number, sending);
+        });
 }
