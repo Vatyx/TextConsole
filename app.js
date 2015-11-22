@@ -183,15 +183,15 @@ function handleCommand(number, command, content)
 			break;
 		case "fact":
 			console.log("in fact");
-			commmands.fact(number);
+			commands.fact(number);
 			break;
 		case "joke":
 			console.log("in joke");
-			commmands.joke(number);
+			commands.joke(number);
 			break;
 		case "pug":
 			console.log("in pug");
-			commmands.image(number, "pug");
+			commands.image(number, "pug");
 			break;
 		default:
 			console.log("In default")
