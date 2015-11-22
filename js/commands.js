@@ -2,12 +2,29 @@ var needle = require("needle");
 var twilio = require("./twilio.js");
 var setLocation = require("./../app.js");
 
-exports.daytime = function(number)
+exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
     var date = new Date();
     var current_hour = date.toString();
     twilio.sendMessage(number, current_hour);
+
+    // needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false" + name + "&format=json", null,
+    //     function(error,response,body){
+    //         switch(body.timeZoneBody[0])
+    //         {
+    //             case 'P':
+                    
+    //                 break;
+    //             case 'M':
+    //                 break;
+    //             case 'C':
+    //                 break;
+    //             case 'E':
+    //                 break;
+    //             default:
+    //         }
+    //     });
 }
 
 exports.define = function(number, word){

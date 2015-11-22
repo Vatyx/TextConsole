@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 db = {};
 
-//var defaultnumber = "+12144035793";
-//commands.weather(defaultnumber, "Plano, TX");
+var defaultnumber = "+12144035793";
+commands.weather(defaultnumber, "Plano, TX");
 
 app.get("/", function(req, res)
 {
