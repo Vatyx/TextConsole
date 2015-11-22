@@ -7,7 +7,7 @@ var setLocation = require("./../app.js");
 
 var helpDict = 
 {
-    "help": "help (command) - Get more information about a command",
+    "help!": "help! (command) - Get more information about a command",
     "location": "location (location) - Set your location",
     "set": "set (location) - Set your location",
     "time": "time - Get current time at set location",
