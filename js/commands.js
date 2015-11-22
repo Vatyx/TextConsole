@@ -235,3 +235,56 @@ exports.ingredients = function(number, reciepe)
             twilio.sendMessage(number, sending);
         });
 }
+
+exports.bio = function(number, name)
+{
+    needle.get("https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=George%20Bush&format=json", null, 
+        function(error, response, body)
+        {
+            console.log(JSON.stringify(body));
+        });
+}
+
+exports.email = function(number, address, subject, body)
+{
+    var mandrill = require('node-mandrill')('pXSSWo-l9HWZoj1uCkKsZA');
+
+    mandrill('/messages/send', {
+        message: {
+            to: [{email: address, name: 'You!'}],
+            from_email: 'textconsole@coderedliftoff.com',
+            subject: subject,
+            text: body
+        }
+    }, function(error, response)
+    {
+        //uh oh, there was an error
+        if (error) console.log( JSON.stringify(error) );
+
+        //everything's good, lets see what mandrill said
+        else 
+        {
+            console.log(response);
+            twilio.sendMessage(number, "Your email was sent successfully.");
+        }
+    });
+}
+
+exports.pick = function(number, numPick, listInput){
+    if(numPick > listInput.length || numPick < 0)
+    {
+        twilio,sendMessage(number, "Invalid input");
+        return;
+    }
+
+    var arrList = listInput;
+    var result = "";
+    while(numPick > 0){
+        var randomSpot = Math.floor(Math.random()*(arrList.length));
+        result += arrList[randomSpot] + ", ";
+        arrList.splice(randomSpot,1);
+        numPick -= 1;
+    }
+    
+    twilio.sendMessage(number, result.substring(0,result.lastIndexOf(",")));
+}

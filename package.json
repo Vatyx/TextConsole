@@ -14,6 +14,8 @@
     "express": "^4.13.3",
     "imgur": "^0.1.7",
     "needle": "^0.11.0",
+    "node-mandrill": "^1.0.1",
+    "sendgrid": "^1.9.2",
     "twilio": "^2.5.2",
     "wolfram-alpha": "^0.3.0"
   }
