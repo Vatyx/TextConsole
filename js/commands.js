@@ -200,6 +200,28 @@ exports.urbanDefine = function(number,word){
                });
 
 }
+exports.news = function(number,section){
+    section = section.toLowerCase();
+    var predefinedSections = ["home","world","national","politics","nyregion","business","opinion",
+                              "technology","science","health","sports","arts","fashion","dining",
+                              "travel","magazine","realestate"];
+    if (predefinedSections.indexOf(section) !== -1){
+        needle.get("http://api.nytimes.com/svc/topstories/v1/"+section+".json?api-key=0521700721a48d7be7cf4637cb8102ee:15:73556446",null,
+                   function(error,response,body){
+                   var results = "";
+                   body = JSON.parse(body);
+                   for(var i = 0;i < body.results.length/4; ++i){
+                   results += (i+1) +": "+ body.results[i].title;
+                   results += "\n" + body.results[i].abstract +"\n";
+                   }
+                   twilio.sendMessage(number,results);
+                   });
+        
+    }else{
+        twilio.sendMessage(number,"Please use a section in " + predefinedSections);
+    }
+
+}
 exports.sos = function(number){
     var phoneList = "211 – Local community information or social services (in some cities)\n" +
                     "311 – City government or non-emergency police matters\n" +
