@@ -175,12 +175,13 @@ exports.CSIMiami = function(number)
 exports.random = function(number, lower, upper){
     twilio.sendMessage(number, Math.floor(rand = Math.floor(Math.random()*(upper-lower+1) + lower))); 
 }
-exports.translate = function(number,words,to){
+
+exports.translate = function(number,to,words){
     needle.get("http://api.mymemory.translated.net/get?q=" + words + "&langpair=en|" + to,null,
-               function(error,response,body){
-                    var result = body.responseData.translatedText;
-                    twilio.sendMessage(number,result);
-               });
+        function(error,response,body){
+            var result = body.responseData.translatedText;
+            twilio.sendMessage(number,result);
+        });
 }
 exports.sos = function(number){
     var phoneList = "211 – Local community information or social services (in some cities)\n" +
