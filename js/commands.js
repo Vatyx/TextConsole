@@ -94,6 +94,27 @@ exports.flipCoin = function(number){
         var result = Math.round(Math.random()) === 0 ? "Tails" : "Heads";
         twilio.sendMessage(number, result);
 }
+//wolframalpha ID: PXHV89-GUAVQU3V65
+var wolfram = require('wolfram-alpha').createClient("PXHV89-GUAVQU3V65", null);
+export.compute = function(number, expression){
+        wolfram.query(expression,
+                  function (error, body) {
+                      var url = "";
+                      var result = "";
+                  try{
+                      url = body[0].subpods[0].image;
+                      if (error)
+                      url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
+                      result = body[1].subpods[0].text;
+                  }catch(e){
+                      url = "http://quiz.wada-ama.org/static/img/card/answer-red-x.png";
+                      result = "result undefined.\n";
+                  }
+                  //url is the image and result is the text result
+                  console.log(url);
+                  console.log(result);
+                  });
+}
 
 exports.location = function(number, name)
 {
