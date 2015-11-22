@@ -7,7 +7,7 @@ var setLocation = require("./../app.js");
 
 var helpDict = 
 {
-    "help!": "help! (command) - Get more information about a command",
+    "man": "man (command) - Get more information about a command",
     "location": "location (location) - Set your location",
     "set": "set (location) - Set your location",
     "time": "time - Get current time at set location",
@@ -45,7 +45,8 @@ var helpDict =
 
 exports.help = function(number, command)
 {
-    if(command == undefined)
+    console.log("This is the command " + command)
+    if(command == undefined || command == "")
     {
         var help = "Available Commands:\n" + Object.keys(helpDict).join(", ");
         console.log(help);
