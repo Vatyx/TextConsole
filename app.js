@@ -74,6 +74,7 @@ function handleCommand(number, command, content)
 		case "giphy":
 			console.log("In giphy");
 			commands.giphy(number, content);
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
