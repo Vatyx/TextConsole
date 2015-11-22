@@ -6,7 +6,7 @@ exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
     var date = new Date();
-    var utc = date.getUTCMilliseconds();
+    var utc = date.getTime();
     var current_hour = date.toString();
     twilio.sendMessage(number, current_hour);
 
@@ -104,6 +104,8 @@ exports.location = function(number, name)
                     twilio.sendMessage(number, "Setting your location to " + body[0].display_name);
                });
 }
+
+exports.imgur = function()
 
 
 exports.invalidLocation = function(number)
