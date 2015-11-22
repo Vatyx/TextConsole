@@ -25,9 +25,10 @@ app.post("/message", function(req, res)
 	console.log("In message");
 	var number = req.body.From;
 	//var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
-	var command = ((req.body.Body.split(" "))[0]).toLowerCase();
-	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim();
-
+//	var command = ((req.body.Body.split(" "))[0]).toLowerCase();
+//	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim();
+	var command = req.body.Body.replace(/\s+/,'\x01').split('\x01')[0].toLowerCase();
+	var content = req.body.Body.replace(/\s+/,'\x01').split('\x01')[1].trim();
 	console.log(req.body.Body);
 	console.log("From: " + number);
 	console.log("Command: " + command);
@@ -157,39 +158,26 @@ function handleCommand(number, command, content)
 			break;
 		case "python":
 			console.log("In python");
-			var attach = command.split("python");
-			content = attach[1] + content;
-
 			commands.python(number, content);
 			break;
 		case "ruby":
 			console.log("In ruby");
-			var attach = command.split("ruby");
-			content = attach[1] + content;
 			commands.ruby(number, content);
 			break;
 		case "javascript":
 			console.log("In javascript");
-			var attach = command.split("javascript");
-			content = attach[1] + content;
 			commands.javascript(number, content);
 			break;
 		case "java":
 			console.log("In java");
-			var attach = command.split("java");
-			content = attach[1] + content;
 			commands.java(number, content);
 			break;
 		case "cpp":
 			console.log("In cpp");
-			var attach = command.split("cpp");
-			content = attach[1] + content;
 			commands.cpp(number, content);
 			break;
 		case "c++":
 			console.log("In c++");
-			var attach = command.split("c++");
-			content = attach[1] + content;
 			commands.cpp(number, content);
 			break;
 		default:
