@@ -33,7 +33,26 @@ exports.define = function(number, word){
                });
     
 }
+exports.weather = function(number,location){
+    var now = new Date();
+    var weatherUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22" + location +"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys" ;
+    needle.get(weatherUrl,null,
+               function(error,response,body){
+               //body.query
+               var results = "";
+               if (body.query.count == 0){
+               results = "Invalid location.\n";
+               }else{
+               var detailLocation = body.query.results.channel.location;
+               results = body.query.results.channel.item.description.replace(/<(?:.|\n)*?>/gm, '');
+               results = results.replace("Current Conditions:\n","Current Conditions for " + detailLocation.city + "," + detailLocation.region + "," + detailLocation.country + "\n");
+               results = results.replace("Full Forecast at Yahoo! Weather\n","");
+               results = results.replace("(provided by The Weather Channel)\n","");
+               }
+               twilio.sendMessage(number, results);
+               });
 
+}
 exports.location = function(number, name)
 {
     needle.get("http://nominatim.openstreetmap.org/search?q=" + name + "&format=json", null,
