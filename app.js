@@ -27,6 +27,7 @@ app.post("/message", function(req, res)
 	//var command = req.body.Body.substring(0, req.body.Body.indexOf(" ")).toLowerCase();
 //	var command = ((req.body.Body.split(" "))[0]).toLowerCase();
 //	var content = req.body.Body.substring(req.body.Body.indexOf(" ")).trim();
+	req.body.Body += " ";
 	var command = req.body.Body.replace(/\s+/,'\x01').split('\x01')[0].toLowerCase();
 	var content = req.body.Body.replace(/\s+/,'\x01').split('\x01')[1].trim();
 	console.log(req.body.Body);
