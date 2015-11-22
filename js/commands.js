@@ -6,25 +6,30 @@ exports.daytime = function(number, location)
 {
     console.log("Got into the daytime function");
     var date = new Date();
+    var utc = date.getUTCMilliseconds();
     var current_hour = date.toString();
-    twilio.sendMessage(number, current_hour);
+    //twilio.sendMessage(number, current_hour);
 
-    // needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false" + name + "&format=json", null,
-    //     function(error,response,body){
-    //         switch(body.timeZoneBody[0])
-    //         {
-    //             case 'P':
-                    
-    //                 break;
-    //             case 'M':
-    //                 break;
-    //             case 'C':
-    //                 break;
-    //             case 'E':
-    //                 break;
-    //             default:
-    //         }
-    //     });
+    needle.get("https://maps.googleapis.com/maps/api/timezone/json?location=" + location.lat + "%2C" + location.lon + "&timestamp=1331161200&sensor=false" + name + "&format=json", null,
+        function(error,response,body){
+            switch(body.timeZoneBody[0])
+            {
+                case 'P':
+                    utc -= 8 * 3600000;
+                    break;
+                case 'M':
+                    utc -= 7 * 3600000;
+                    break;
+                case 'C':
+                    utc -= 6 * 3600000;
+                    break;
+                case 'E':
+                    utc -= 5 * 3600000;
+                    break;
+                default:
+            }
+            twilio.sendMessage(number, new Date(utc).toString());
+        });
 }
 
 exports.define = function(number, word){
