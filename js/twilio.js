@@ -1,8 +1,9 @@
+var client = require('twilio')('AC04ae25977f10fe51e9d811bf0bf2a07f', 
+    'd820c97f96b72dfb49464b79b4158779');
+
 exports.sendMessage = function(number, message)
 {
     console.log("I'm in there");
-    var client = require('twilio')('AC04ae25977f10fe51e9d811bf0bf2a07f', 
-    'd820c97f96b72dfb49464b79b4158779');
 
     client.messages.create({
     body: message,
@@ -28,8 +29,8 @@ exports.sendMessage = function(number, message)
 exports.sendMessagePicture = function(number, message, url)
 {
     console.log("I'm in there");
-    var client = require('twilio')('AC04ae25977f10fe51e9d811bf0bf2a07f', 
-    'd820c97f96b72dfb49464b79b4158779');
+    // var client = require('twilio')('AC04ae25977f10fe51e9d811bf0bf2a07f', 
+    // 'd820c97f96b72dfb49464b79b4158779');
 
     client.messages.create({
     body: message,

@@ -94,6 +94,10 @@ function handleCommand(number, command, content)
 			console.log("In compute");
 			commands.compute(number, content);
 			break;
+		case "image":
+			console.log("In image");
+			commands.image(number, content);
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
