@@ -43,7 +43,6 @@ app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 //hi
-dszfsd
 function handleCommand(number, command, content)
 {
 	switch(command)
