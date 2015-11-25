@@ -197,6 +197,8 @@ function handleCommand(number, command, content)
 			console.log("in pug");
 			commands.image(number, "pug");
 			break;
+		case "schedule":
+			break;
 		default:
 			console.log("In default")
 			commands.invalidCommand(number, command);
